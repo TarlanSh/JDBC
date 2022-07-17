@@ -10,7 +10,7 @@ public class Main {
         // реализуйте алгоритм здесь
         UserDao dao = new UserDaoJDBCImpl();
         UserService userService = new UserServiceImpl(dao);
-       // d rjycnhernj cthdbcfк в конструктор сервиса
+
         userService.createUsersTable();
         System.out.println("Create  table Users");
         userService.saveUser("Ivan", "Ivanov", (byte) 35);
@@ -22,6 +22,7 @@ public class Main {
 
         userService.dropUsersTable();
         System.out.println("Drop table Users");
+
 
     }
 }
