@@ -38,12 +38,11 @@ public class UserDaoJDBCImpl implements UserDao {
                 throwables.printStackTrace();
             }
         }
-
     }
 
     public void dropUsersTable() {
         connection = Util.getInstance().getConnection();
-        String sqlCommand = "DROP TABLE Users";
+        String sqlCommand = "DROP TABLE IF EXISTS Users";
         Statement statement = null;
         try {
             connection.setAutoCommit(false);
@@ -64,7 +63,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 throwables.printStackTrace();
             }
         }
-
     }
 
     public void saveUser(String name, String lastName, byte age) {
@@ -86,10 +84,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         connection = Util.getInstance().getConnection();
-        //  preparedStatement =
-        //       null;
+        PreparedStatement preparedStatement = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Users WHERE id=?");
+            preparedStatement = connection.prepareStatement("DELETE FROM Users WHERE id=?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
@@ -114,17 +111,14 @@ public class UserDaoJDBCImpl implements UserDao {
                 usersList.add(user);
                 System.out.println(user);
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return usersList;
     }
 
     public void cleanUsersTable() {
-        PreparedStatement preparedStatement =
-                null;
+        PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("DELETE FROM Users");
             preparedStatement.executeUpdate();
@@ -132,6 +126,5 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 }
