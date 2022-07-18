@@ -8,8 +8,7 @@ import jm.task.core.jdbc.service.UserServiceImpl;
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        UserDao dao = new UserDaoJDBCImpl();
-        UserService userService = new UserServiceImpl(dao);
+        UserService userService = new UserServiceImpl();
 
         userService.createUsersTable();
         System.out.println("Create  table Users");
@@ -20,5 +19,6 @@ public class Main {
         userService.getAllUsers();
         userService.cleanUsersTable();
         userService.dropUsersTable();
+
     }
 }

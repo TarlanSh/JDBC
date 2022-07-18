@@ -7,12 +7,8 @@ import java.sql.Connection;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    Connection connection;
     UserDao userDao = new UserDaoJDBCImpl();
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     public UserServiceImpl() {
     }
