@@ -5,8 +5,6 @@ import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import javax.persistence.Query;
-
 import java.util.List;
 
 
@@ -27,6 +25,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery(sqlCommand).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -40,6 +39,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("Таблица удалена");
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -54,6 +54,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("User с именем " + name + " добавлен в базу");
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -67,6 +68,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.delete(user);
             transaction.commit();
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }
@@ -81,6 +83,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println(users);
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
         return users;
@@ -89,12 +92,13 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         Transaction transaction = null;
-        String sql="TRUNCATE TABLE Users";
+        String sql = "TRUNCATE TABLE Users";
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.createSQLQuery(sql).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
     }
