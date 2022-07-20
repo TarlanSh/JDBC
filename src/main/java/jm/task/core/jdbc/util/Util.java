@@ -14,42 +14,47 @@ import java.util.Properties;
 
 public class Util {
     // реализуйте настройку соеденения с БД
-    private static  Util instance;
-    static String url =  "jdbc:mysql://localhost:3306/my_db?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true" +
+    private static Util instance;
+    static String url = "jdbc:mysql://localhost:3306/my_db?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true" +
             "&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private final static String URLFIXED =
             "jdbc:mysql://localhost:3306/my_db?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true" +
                     "&useLegacyDatetimeCode=false&serverTimezone=UTC";
     static String username = "root";
     static String password = "tbsh";
-    private static  SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
 
-    private Util(){}
+    private Util() {
+    }
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URLFIXED, username, password);
-        }catch (SQLException e){
-            throw new RuntimeException("Ошибка соединения с БД",e);
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка соединения с БД", e);
         }
     }
-    public static void closeConnection(){
+
+    public static void closeConnection() {
         try {
             getConnection().close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     private static final Properties settings = new Properties();
+
     static {
         settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         settings.put(Environment.URL, url);
         settings.put(Environment.USER, username);
         settings.put(Environment.PASS, password);
         settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-        settings.put(Environment.SHOW_SQL,"true");
+        settings.put(Environment.SHOW_SQL, "true");
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
     }
+
     public static SessionFactory getSessionFactory() {
         try {
             Configuration configuration = new Configuration();
@@ -63,11 +68,11 @@ public class Util {
         }
         return sessionFactory;
     }
-    public static Util getInstance(){
-        if (instance == null){
+
+    public static Util getInstance() {
+        if (instance == null) {
             instance = new Util();
         }
         return instance;
     }
-
 }
