@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class Util {
     // реализуйте настройку соеденения с БД
-    private static Util instance;
+
     static String url = "jdbc:mysql://localhost:3306/my_db?useUnicode=true&useSSL=true&useJDBCCompliantTimezoneShift=true" +
             "&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private final static String URLFIXED =
@@ -69,10 +69,5 @@ public class Util {
         return sessionFactory;
     }
 
-    public static Util getInstance() {
-        if (instance == null) {
-            instance = new Util();
-        }
-        return instance;
-    }
+
 }
